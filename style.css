@@ -1,0 +1,1278 @@
+@import url('https://fonts.googleapis.com/css2?family=Bakbak+One&family=Luckiest+Guy&family=Secular+One&family=Tilt+Warp&family=Tinos:wght@400;700&display=swap');
+/* =========================================================
+   ROOT / GLOBAL
+========================================================= */
+
+:root {
+    --orange: #ff7200;
+    --orange-dark: #c95a00;
+    --cream: #f7f5f2;
+    --paper: #eeeae5;
+    --ink: #2c2622;
+    --white: #fff;
+
+    --max: 1180px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    min-width: 320px;
+    background: var(--white);
+    color: var(--ink);
+    font-family: "Tinos", serif;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+    height: 64px;
+    width: 100%;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-container {
+    width: min(94%, var(--max));
+    height: 100%;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    transform: translateY(5px);
+}
+
+.brand img {
+    max-height: 50px;
+    width: auto;
+    display: block;
+}
+
+.brand-mark {
+    height: 45px;
+    width: auto;
+    display: block;
+    transform: translateY(10px);
+}
+
+.brand-text {
+    font-family: "Secular One", sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.brand-text small {
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 38px;
+    align-items: center;
+}
+
+.main-nav a {
+    font-family: "Secular One", sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.7px;
+    transition: 0.2s ease;
+}
+
+.main-nav a:hover {
+    color: var(--orange);
+}
+
+.menu-toggle {
+    display: none;
+    border: 0;
+    background: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    width: 100%;
+    height: 1000px;
+    position: relative;
+    overflow: hidden;
+}
+
+.real-image {
+    position: absolute;
+    inset: 0;
+
+    width: 1920px;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    display: block;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding-top: 36px;
+
+    color: var(--orange);
+    text-align: center;
+
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+}
+
+.hero-overlay h1 {
+    margin: 0;
+
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 170px;
+    line-height: 1;
+    
+    
+}
+
+.hero-overlay p {
+    margin: 10px 0 0;
+
+    font-family: "Tinos", serif;
+    font-size: 100px;
+}
+
+
+/* =========================================================
+   IMAGE PLACEHOLDER
+========================================================= */
+
+.image-placeholder {
+    background: linear-gradient(
+        135deg,
+        #d8d2ca,
+        #a59a8e
+    );
+
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.image-placeholder span {
+    font-family: "Bakbak One", sans-serif;
+    font-size: clamp(20px, 3vw, 38px);
+}
+
+.image-placeholder small {
+    font-family: "Tinos", serif;
+    font-size: 15px;
+    letter-spacing: 0;
+    margin-top: 7px;
+}
+
+.hero-placeholder {
+    position: absolute;
+    inset: 0;
+}
+
+
+/* =========================================================
+   FEATURED PRODUCTS
+========================================================= */
+
+.section-white {
+    width: 100%;
+    padding: 35px 5% 48px;
+}
+
+.section-intro {
+    width: min(100%, 620px);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-intro h2 {
+    margin: 0;
+
+    color: var(--orange);
+
+    font-family: "Bakbak One", sans-serif;
+    font-size: clamp(32px, 4.2vw, 53px);
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+.section-intro p {
+    margin: 8px auto 18px;
+
+    font-size: 18px;
+    line-height: 1.15;
+}
+
+.display-title {
+    margin: 15px 0 30px;
+
+    color: var(--orange);
+
+    font-family: "Luckiest Guy", cursive;
+    text-align: center;
+
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 0.82;
+}
+
+
+/* IMPORTANT:
+   This was missing from the previous CSS.
+*/
+
+.featured-grid {
+    width: min(100%, 1050px);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    gap: 20px;
+    align-items: start;
+}
+
+.featured-card {
+    width: 100%;
+    text-align: center;
+}
+
+.product-placeholder {
+    display: block;
+
+    width: 158px;
+    max-width: 100%;
+    height: 128px;
+
+    margin: 0 auto;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 8px;
+    border: 1px solid #aaa;
+}
+
+.featured-card .pill-button {
+    display: block;
+
+    width: 150px;
+    max-width: 100%;
+
+    margin: 10px auto 0;
+    padding: 7px 14px;
+
+    border-radius: 30px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.pill-button,
+.order-button,
+.email-row button {
+    border: 0;
+
+    background: var(--orange-dark);
+    color: #fff;
+
+    cursor: pointer;
+
+    font-family: "Tilt Warp", sans-serif;
+    letter-spacing: 1px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.pill-button:hover,
+.order-button:hover,
+.email-row button:hover {
+    background: #a74600;
+    transform: translateY(-1px);
+}
+
+.pill-button {
+    width: 150px;
+
+    border-radius: 30px;
+
+    margin-top: 7px;
+    padding: 5px 14px;
+
+    font-size: 12px;
+}
+
+.order-button {
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+
+/* =========================================================
+   VALUES / ABOUT
+========================================================= */
+
+.values {
+    width: 100%;
+
+    background: var(--orange);
+    color: #fff;
+
+    padding: 20px 5% 28px;
+}
+
+.values-grid {
+    width: min(100%, 1050px);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 55px;
+}
+
+.value-card {
+    min-width: 0;
+}
+
+.value-placeholder {
+    width: 100%;
+    height: 140px;
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+.value-card h3 {
+    margin: 5px 0;
+
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+.value-card p {
+    margin: 0;
+
+    font-size: 16px;
+    line-height: 1.15;
+}
+
+
+/* =========================================================
+   SERVICE STRIP
+========================================================= */
+
+.service-strip {
+    width: min(96%, 1140px);
+
+    margin: 14px auto 24px;
+
+    background: var(--orange-dark);
+    color: #fff;
+
+    border-radius: 26px;
+
+    padding: 11px 24px;
+
+    display: grid;
+
+    grid-template-columns:
+        2.1fr
+        repeat(3, minmax(0, 1fr));
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.service-strip > div {
+    min-width: 0;
+
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 13px;
+    line-height: 1.05;
+}
+
+.service-title {
+    font-size: 21px !important;
+}
+
+
+/* =========================================================
+   PRODUCT SHOWCASE
+========================================================= */
+
+.product-showcase {
+    width: 100%;
+    padding: 0 5% 24px;
+}
+
+.product-grid {
+    width: min(100%, 1080px);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 28px;
+}
+
+.product-card {
+    min-width: 0;
+    text-align: left;
+}
+
+.shop-placeholder {
+    display: block;
+
+    width: 100%;
+    height: 280px;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 8px;
+
+    margin-bottom: 15px;
+}
+
+.product-card h3 {
+    margin: 7px 0 2px;
+
+    font-family: "Bakbak One", sans-serif;
+    font-size: 17px;
+}
+
+.stars {
+    font-family: Arial, sans-serif;
+
+    letter-spacing: 2px;
+
+    color: var(--orange);
+}
+
+.product-card p {
+    margin: 2px 0;
+
+    font-size: 14px;
+}
+
+.product-card strong {
+    font-family: "Tilt Warp", sans-serif;
+}
+
+
+/* =========================================================
+   STORY SECTION
+========================================================= */
+
+.story-grid {
+    width: 100%;
+    min-height: 500px;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.story-text {
+    min-width: 0;
+
+    padding: 60px 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.light-panel {
+    background: var(--cream);
+}
+
+.orange-panel {
+    background: var(--orange);
+    color: white;
+}
+
+.story-text p {
+    margin: 0;
+
+    font-family: "Tinos", serif;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.mini-logo {
+    width: 100px;
+    height: 100px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin-bottom: 30px;
+}
+
+.story-photo {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+.story-photo-image {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* =========================================================
+   NEWSLETTER
+========================================================= */
+
+.newsletter {
+    width: 100%;
+
+    background: var(--orange);
+    color: #fff;
+
+    padding: 26px 7%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1.4fr);
+
+    gap: 40px;
+
+    align-items: center;
+}
+
+.newsletter h2 {
+    margin: 0;
+
+    font-family: "Luckiest Guy", cursive;
+    font-size: 40px;
+}
+
+.newsletter p {
+    margin: 4px 0;
+
+    font-family: "Tilt Warp", sans-serif;
+}
+
+.newsletter form {
+    min-width: 0;
+}
+
+.newsletter form label {
+    display: block;
+
+    font-family: "Secular One", sans-serif;
+
+    margin-bottom: 7px;
+}
+
+.email-row {
+    width: 100%;
+
+    display: flex;
+}
+
+.email-row input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border: 0;
+    outline: 0;
+
+    font-family: "Tinos", serif;
+}
+
+.email-row button {
+    padding: 0 20px;
+}
+
+.newsletter small {
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    width: 100%;
+
+    background: var(--orange);
+    color: #fff;
+
+    padding: 35px 7% 22px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr)
+        minmax(0, 1fr)
+        minmax(0, 1.3fr);
+
+    gap: 30px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.footer-col {
+    min-width: 0;
+}
+
+.footer-col h3 {
+    margin: 0 0 10px;
+
+    font-family: "Tilt Warp", sans-serif;
+}
+
+.footer-col p,
+.footer-col a {
+    display: block;
+
+    font-size: 16px;
+
+    margin: 5px 0;
+}
+
+.footer-col a:hover {
+    text-decoration: underline;
+}
+
+.footer-brand {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+}
+
+.footer-logo {
+    width: 200px;
+    height: 200px; 
+
+    max-width: none;
+    max-height: none;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+.footer-brand p {
+    width: 100%;
+
+    text-align: center;
+
+    margin: 8px 0 0;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   901px - 1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .nav-container {
+        width: 92%;
+    }
+
+    .main-nav {
+        gap: 25px;
+    }
+
+    .featured-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 30px;
+    }
+
+    .values-grid {
+        gap: 35px;
+    }
+
+    .story-text {
+        padding: 45px 35px;
+    }
+}
+
+.breadbag img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* =========================================================
+   TABLET
+   601px - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+    /* HEADER */
+
+    .site-header {
+        height: 60px;
+    }
+
+    .nav-container {
+        width: 90%;
+    }
+
+    .main-nav {
+        gap: 20px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+    }
+
+
+    /* HERO */
+
+    .hero {
+        height: 380px;
+    }
+
+    .hero-overlay {
+        padding-top: 30px;
+    }
+
+    .hero-overlay h1 {
+        font-size: 52px;
+    }
+
+    .hero-overlay p {
+        font-size: 20px;
+    }
+
+
+    /* FEATURED */
+
+    .section-white {
+        padding: 32px 5% 45px;
+    }
+
+    .featured-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 25px;
+    }
+
+    .product-placeholder {
+        width: 150px;
+        height: 125px;
+    }
+
+
+    /* VALUES */
+
+    .values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 35px;
+    }
+
+
+    /* SERVICE */
+
+    .service-strip {
+        grid-template-columns:
+            2fr
+            repeat(2, minmax(0, 1fr));
+
+        gap: 18px;
+
+        padding: 15px 20px;
+    }
+
+    .service-title {
+        grid-column: span 3;
+    }
+
+
+    /* PRODUCTS */
+
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 25px;
+    }
+
+    .shop-placeholder {
+        height: 260px;
+    }
+
+
+    /* STORY */
+
+    .story-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .orange-panel {
+        grid-column: span 2;
+    }
+
+    .story-text {
+        padding: 45px 35px;
+    }
+
+
+    /* NEWSLETTER */
+
+    .newsletter {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+
+    /* FOOTER */
+
+    .footer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   401px - 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* HEADER */
+
+    .site-header {
+        height: 60px;
+    }
+
+    .nav-container {
+        width: 90%;
+    }
+
+    .brand img {
+        max-height: 43px;
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+
+    /* HERO */
+
+    .hero {
+        height: 320px;
+    }
+
+    .hero-overlay {
+        padding-top: 25px;
+    }
+
+    .hero-overlay h1 {
+        font-size: 42px;
+    }
+
+    .hero-overlay p {
+        font-size: 17px;
+        margin-top: 5px;
+    }
+
+
+    /* FEATURED */
+
+    .section-white {
+        padding: 30px 5% 40px;
+    }
+
+    .section-intro h2 {
+        font-size: 38px;
+    }
+
+    .section-intro p {
+        font-size: 16px;
+        line-height: 1.15;
+    }
+
+    .display-title {
+        font-size: 42px;
+        margin-bottom: 25px;
+    }
+
+    .featured-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 25px 15px;
+    }
+
+    .product-placeholder {
+        width: 140px;
+        height: 115px;
+    }
+
+    .featured-card .pill-button {
+        width: 135px;
+    }
+
+
+    /* VALUES */
+
+    .values {
+        padding: 25px 6%;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .value-placeholder {
+        height: 180px;
+    }
+
+    .value-card h3 {
+        font-size: 17px;
+    }
+
+    .value-card p {
+        font-size: 15px;
+    }
+
+
+    /* SERVICE STRIP */
+
+    .service-strip {
+        width: 90%;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 15px;
+
+        padding: 18px;
+
+        border-radius: 20px;
+    }
+
+    .service-title {
+        grid-column: span 2;
+
+        font-size: 19px !important;
+    }
+
+    .service-strip > div {
+        font-size: 12px;
+    }
+
+
+    /* PRODUCTS */
+
+    .product-showcase {
+        padding: 0 6% 30px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 25px 15px;
+    }
+
+    .shop-placeholder {
+        height: 200px;
+    }
+
+    .product-card h3 {
+        font-size: 15px;
+    }
+
+    .product-card p {
+        font-size: 13px;
+    }
+
+
+    /* STORY */
+
+    .story-grid {
+        grid-template-columns: 1fr;
+
+        min-height: auto;
+    }
+
+    .story-text {
+        padding: 40px 30px;
+    }
+
+    .story-text p {
+        font-size: 17px;
+        line-height: 1.55;
+    }
+
+    .story-photo {
+        min-height: 350px;
+    }
+
+    .story-photo-image {
+        height: 350px;
+    }
+
+    .orange-panel {
+        grid-column: auto;
+    }
+
+
+    /* NEWSLETTER */
+
+    .newsletter {
+        padding: 30px 6%;
+
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .newsletter h2 {
+        font-size: 34px;
+    }
+
+    .email-row {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .email-row input {
+        width: 100%;
+    }
+
+    .email-row button {
+        width: 100%;
+        padding: 12px;
+    }
+
+
+    /* FOOTER */
+
+    .footer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        padding: 30px 6% 20px;
+
+        gap: 25px;
+    }
+
+    .footer-brand {
+        grid-column: span 2;
+    }
+
+    .footer-logo {
+        width: 120px !important;
+        height: 120px !important;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   320px - 400px
+========================================================= */
+
+@media (max-width: 400px) {
+
+    /* HERO */
+
+    .hero {
+        height: 280px;
+    }
+
+    .hero-overlay h1 {
+        font-size: 35px;
+    }
+
+    .hero-overlay p {
+        font-size: 15px;
+    }
+
+
+    /* FEATURED */
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-placeholder {
+        width: 180px;
+        height: 140px;
+    }
+
+
+    /* PRODUCTS */
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-placeholder {
+        height: 250px;
+    }
+
+
+    /* SERVICE */
+
+    .service-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .service-title {
+        grid-column: auto;
+    }
+
+
+    /* FOOTER */
+
+    .footer {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+}
+
+
+/* =========================================================
+   EXTRA ZOOM / NARROW SCREEN PROTECTION
+========================================================= */
+
+@media (max-width: 350px) {
+
+    .nav-container {
+        width: 94%;
+    }
+
+    .hero-overlay h1 {
+        font-size: 31px;
+    }
+
+    .hero-overlay p {
+        font-size: 14px;
+    }
+
+    .section-white {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .featured-card .pill-button {
+        width: 125px;
+        font-size: 11px;
+    }
+
+    .newsletter h2 {
+        font-size: 30px;
+    }
+
+    .footer {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
