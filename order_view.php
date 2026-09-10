@@ -60,6 +60,12 @@ $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
 
 $statuses = ['pending', 'preparing', 'ready', 'completed', 'cancelled'];
 
+$paymentMethodLabels = [
+    'cash'        => 'Cash',
+    'credit_card' => 'Credit Card',
+    'mobile_pay'  => 'Mobile Pay',
+];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,6 +122,17 @@ $statuses = ['pending', 'preparing', 'ready', 'completed', 'cancelled'];
 
         <p><strong>Placed:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
         <p><strong>Contact number:</strong> <?= htmlspecialchars($order['contact_number']) ?></p>
+
+        <p>
+            <strong>Payment:</strong>
+            <?php if ($order['payment_status'] === 'paid'): ?>
+                <span class="role-badge status-completed">
+                    <?= htmlspecialchars($paymentMethodLabels[$order['payment_method']] ?? 'Paid') ?>
+                </span>
+            <?php else: ?>
+                <span class="role-badge status-cancelled">Unpaid</span>
+            <?php endif; ?>
+        </p>
 
         <?php if ($order['notes'] !== ''): ?>
             <p><strong>Notes:</strong> <?= htmlspecialchars($order['notes']) ?></p>

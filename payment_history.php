@@ -7,7 +7,7 @@ require 'database/config.php';
 if (!isset($_SESSION['user_id'])) {
     header(
         'Location: login.php?status=error&message='
-        . urlencode('Please log in to view your orders.')
+        . urlencode('Please log in to view your payment history.')
     );
     exit;
 }
@@ -15,18 +15,25 @@ if (!isset($_SESSION['user_id'])) {
 $pdo = getConnection();
 
 $stmt = $pdo->prepare("
-    SELECT id, total, status, created_at, payment_method, payment_status
-    FROM `orders`
-    WHERE user_id = :user_id
-    ORDER BY created_at DESC
+    SELECT
+        pt.id,
+        pt.order_id,
+        pt.method,
+        pt.provider,
+        pt.amount,
+        pt.status,
+        pt.created_at
+    FROM `payment_transactions` pt
+    WHERE pt.user_id = :user_id
+    ORDER BY pt.created_at DESC
 ");
 
 $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 $stmt->execute();
 
-$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$paymentMethodLabels = [
+$methodLabels = [
     'cash'        => 'Cash',
     'credit_card' => 'Credit Card',
     'mobile_pay'  => 'Mobile Pay',
@@ -45,7 +52,7 @@ $paymentMethodLabels = [
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>My Orders | Harvest Bread Co.</title>
+    <title>Payment History | Harvest Bread Co.</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -63,8 +70,8 @@ $paymentMethodLabels = [
 
         <nav class="main-nav">
             <a href="index.php">HOME</a>
+            <a href="orders.php">MY ORDERS</a>
             <a href="index.php#products">PRODUCTS</a>
-            <a href="payment_history.php">PAYMENTS</a>
         </nav>
 
     </div>
@@ -73,12 +80,12 @@ $paymentMethodLabels = [
 
 <main class="shop-container">
 
-    <h1 class="shop-heading">MY ORDERS</h1>
+    <h1 class="shop-heading">PAYMENT HISTORY</h1>
 
-    <?php if (empty($orders)): ?>
+    <?php if (empty($transactions)): ?>
 
         <div class="empty-state">
-            <p>You haven't placed any orders yet.</p>
+            <p>You don't have any recorded payments yet.</p>
             <a href="index.php#products" class="auth-button shop-button">
                 BROWSE PRODUCTS
             </a>
@@ -92,10 +99,11 @@ $paymentMethodLabels = [
 
                 <thead>
                     <tr>
-                        <th>Order #</th>
+                        <th>Transaction #</th>
+                        <th>Order</th>
                         <th>Date</th>
-                        <th>Total</th>
-                        <th>Payment</th>
+                        <th>Method</th>
+                        <th>Amount</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -103,31 +111,29 @@ $paymentMethodLabels = [
 
                 <tbody>
 
-                    <?php foreach ($orders as $order): ?>
+                    <?php foreach ($transactions as $txn): ?>
 
                         <tr>
-                            <td>#<?= (int) $order['id'] ?></td>
-                            <td><?= htmlspecialchars($order['created_at']) ?></td>
-                            <td>$<?= number_format($order['total'], 2) ?></td>
+                            <td class="payment-history-transaction">
+                                #<?= (int) $txn['id'] ?>
+                            </td>
+                            <td>#<?= (int) $txn['order_id'] ?></td>
+                            <td><?= htmlspecialchars($txn['created_at']) ?></td>
                             <td>
-                                <?php if ($order['payment_status'] === 'paid'): ?>
-                                    <span class="role-badge status-completed">
-                                        <?= htmlspecialchars($paymentMethodLabels[$order['payment_method']] ?? 'Paid') ?>
-                                    </span>
-                                <?php else: ?>
-                                    <a href="payment.php?id=<?= (int) $order['id'] ?>" class="small-button">
-                                        Pay Now
-                                    </a>
+                                <?= htmlspecialchars($methodLabels[$txn['method']] ?? $txn['method']) ?>
+                                <?php if ($txn['provider']): ?>
+                                    (<?= htmlspecialchars($txn['provider']) ?>)
                                 <?php endif; ?>
                             </td>
+                            <td>$<?= number_format($txn['amount'], 2) ?></td>
                             <td>
-                                <span class="role-badge status-<?= htmlspecialchars($order['status']) ?>">
-                                    <?= htmlspecialchars($order['status']) ?>
+                                <span class="role-badge status-completed">
+                                    <?= htmlspecialchars(ucfirst($txn['status'])) ?>
                                 </span>
                             </td>
                             <td>
-                                <a href="order_view.php?id=<?= (int) $order['id'] ?>" class="small-button">
-                                    View
+                                <a href="order_view.php?id=<?= (int) $txn['order_id'] ?>" class="small-button">
+                                    View Order
                                 </a>
                             </td>
                         </tr>

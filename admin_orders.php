@@ -21,13 +21,20 @@ $message = $_GET['message'] ?? null;
 $pdo = getConnection();
 
 $orders = $pdo->query("
-    SELECT o.id, o.total, o.status, o.created_at, u.username, u.email
+    SELECT o.id, o.total, o.status, o.created_at, o.payment_method,
+           o.payment_status, u.username, u.email
     FROM `orders` o
     JOIN `users` u ON u.id = o.user_id
     ORDER BY o.created_at DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
 
 $statuses = ['pending', 'preparing', 'ready', 'completed', 'cancelled'];
+
+$paymentMethodLabels = [
+    'cash'        => 'Cash',
+    'credit_card' => 'Credit Card',
+    'mobile_pay'  => 'Mobile Pay',
+];
 
 ?>
 <!DOCTYPE html>
@@ -96,6 +103,7 @@ $statuses = ['pending', 'preparing', 'ready', 'completed', 'cancelled'];
                     <th>Order #</th>
                     <th>Customer</th>
                     <th>Total</th>
+                    <th>Payment</th>
                     <th>Status</th>
                     <th>Placed</th>
                     <th>Update</th>
@@ -114,6 +122,15 @@ $statuses = ['pending', 'preparing', 'ready', 'completed', 'cancelled'];
                             <span class="admin-you"><?= htmlspecialchars($order['email']) ?></span>
                         </td>
                         <td>$<?= number_format($order['total'], 2) ?></td>
+                        <td>
+                            <?php if ($order['payment_status'] === 'paid'): ?>
+                                <span class="role-badge status-completed">
+                                    <?= htmlspecialchars($paymentMethodLabels[$order['payment_method']] ?? 'Paid') ?>
+                                </span>
+                            <?php else: ?>
+                                <span class="role-badge status-cancelled">Unpaid</span>
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <span class="role-badge status-<?= htmlspecialchars($order['status']) ?>">
                                 <?= htmlspecialchars($order['status']) ?>
@@ -147,7 +164,7 @@ $statuses = ['pending', 'preparing', 'ready', 'completed', 'cancelled'];
 
                 <?php if (empty($orders)): ?>
                     <tr>
-                        <td colspan="7" class="admin-empty">No orders yet.</td>
+                        <td colspan="8" class="admin-empty">No orders yet.</td>
                     </tr>
                 <?php endif; ?>
 

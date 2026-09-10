@@ -5,6 +5,16 @@ session_start();
 require 'database/config.php';
 require 'cart_helpers.php';
 
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Please log in or sign up to order products.',
+    ]);
+    exit;
+}
+
 $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
 $quantity  = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
 

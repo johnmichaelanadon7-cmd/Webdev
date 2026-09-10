@@ -18,15 +18,6 @@ $products = $pdo->query("
 $status  = $_GET['status'] ?? null;
 $message = $_GET['message'] ?? null;
 
-$featured = [
-    ['name' => 'Picture 1', 'image' => 'picture1.jpg'],
-    ['name' => 'Picture 2', 'image' => 'picture2.jpg'],
-    ['name' => 'Picture 3', 'image' => 'picture3.jpg'],
-    ['name' => 'Picture 4', 'image' => 'picture4.jpg'],
-    ['name' => 'Picture 5', 'image' => 'picture5.jpg'],
-    ['name' => 'Picture 6', 'image' => 'picture6.jpg'],
-];
-
 $features = [
     [
         "title" => "Choicest Natural Ingredients",
@@ -50,7 +41,152 @@ $features = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harvest Bread Co. | Dumaguete</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── VIEW ITEM Modal (info only, side-by-side) ───────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal-overlay.open { display: flex; }
 
+        .modal-box {
+            background: #fff;
+            border-radius: 14px;
+            max-width: 760px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 24px 70px rgba(0,0,0,.35);
+            animation: modalIn .22s ease;
+            display: flex;
+        }
+        @keyframes modalIn {
+            from { transform: translateY(28px); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+
+        /* LEFT — image */
+        .modal-img-wrap {
+            flex: 0 0 320px;
+            min-height: 380px;
+            overflow: hidden;
+        }
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* RIGHT — details */
+        .modal-body {
+            flex: 1;
+            padding: 2rem 1.75rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: .5rem;
+        }
+        .modal-tag {
+            font-size: .75rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #e07000;
+            font-weight: 700;
+        }
+        .modal-body h2 {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+        .modal-stars { color: #f5a623; font-size: 1rem; }
+        .modal-desc {
+            color: #555;
+            font-size: .95rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+        .modal-divider {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: .4rem 0;
+        }
+        .modal-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e07000;
+        }
+        .modal-stock {
+            font-size: .85rem;
+            color: #777;
+        }
+        .modal-badge {
+            display: inline-block;
+            background: #fff4e6;
+            color: #e07000;
+            border: 1px solid #f5c68a;
+            border-radius: 20px;
+            font-size: .78rem;
+            font-weight: 700;
+            padding: .25rem .75rem;
+            letter-spacing: .06em;
+            margin-top: .25rem;
+            width: fit-content;
+        }
+        .modal-close {
+            position: absolute;
+            top: .85rem;
+            right: .9rem;
+            background: rgba(255,255,255,.9);
+            border: none;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 1px 4px rgba(0,0,0,.15);
+        }
+        .modal-wrapper { position: relative; }
+
+        /* Responsive: stack on small screens */
+        @media (max-width: 600px) {
+            .modal-box { flex-direction: column; }
+            .modal-img-wrap { flex: none; min-height: 200px; width: 100%; }
+        }
+
+        /* ── Toast notification ──────────────────────────────── */
+        .cart-toast {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #2d7a2d;
+            color: #fff;
+            padding: .75rem 1.5rem;
+            border-radius: 30px;
+            font-size: .95rem;
+            font-weight: 600;
+            box-shadow: 0 6px 24px rgba(0,0,0,.2);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity .3s ease, transform .3s ease;
+            white-space: nowrap;
+        }
+        .cart-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
 </head>
 
 <body>
@@ -73,6 +209,7 @@ $features = [
                     <a href="admin.php">ADMIN</a>
                 <?php else: ?>
                     <a href="orders.php">MY ORDERS</a>
+                    <a href="payment_history.php">PAYMENTS</a>
                 <?php endif; ?>
                 <a href="logout.php">LOGOUT</a>
             <?php else: ?>
@@ -113,34 +250,38 @@ $features = [
         <h3 class="display-title">CHECK OUR<br>BEST MENU</h3>
 
         <div class="featured-grid">
-            <?php foreach ($featured as $idx => $item):
-                // Pair each featured image with the matching DB product (cycle if fewer products)
-                $product = !empty($products) ? $products[$idx % count($products)] : null;
+            <?php
+                // Show up to 6 real products here — same product supplies
+                // both the card (image/name) and the "View Item" modal data,
+                // so what you see is exactly what you get.
+                $featuredProducts = array_slice($products, 0, 6);
             ?>
+            <?php foreach ($featuredProducts as $product): ?>
                 <article class="featured-card">
                     <img
-                        src="image/<?= htmlspecialchars($item['image']) ?>"
-                        alt="<?= htmlspecialchars($item['name']) ?>"
+                        src="image/<?= htmlspecialchars($product['image']) ?>"
+                        alt="<?= htmlspecialchars($product['name']) ?>"
                         class="product-placeholder"
                     >
-                    <?php if ($product): ?>
-                        <button
-                            type="button"
-                            class="pill-button view-item-btn"
-                            data-id="<?= (int)$product['id'] ?>"
-                            data-name="<?= htmlspecialchars($product['name'], ENT_QUOTES) ?>"
-                            data-desc="<?= htmlspecialchars($product['description'], ENT_QUOTES) ?>"
-                            data-price="<?= number_format((float)$product['price'], 2) ?>"
-                            data-stock="<?= (int)$product['stock'] ?>"
-                            data-image="<?= htmlspecialchars($product['image'], ENT_QUOTES) ?>"
-                        >
-                            VIEW ITEM
-                        </button>
-                    <?php else: ?>
-                        <button type="button" class="pill-button" disabled>VIEW ITEM</button>
-                    <?php endif; ?>
+                    <p class="featured-card-name"><?= htmlspecialchars($product['name']) ?></p>
+                    <button
+                        type="button"
+                        class="pill-button view-item-btn"
+                        data-id="<?= (int)$product['id'] ?>"
+                        data-name="<?= htmlspecialchars($product['name'], ENT_QUOTES) ?>"
+                        data-desc="<?= htmlspecialchars($product['description'], ENT_QUOTES) ?>"
+                        data-price="<?= number_format((float)$product['price'], 2) ?>"
+                        data-stock="<?= (int)$product['stock'] ?>"
+                        data-image="<?= htmlspecialchars($product['image'], ENT_QUOTES) ?>"
+                    >
+                        VIEW ITEM
+                    </button>
                 </article>
             <?php endforeach; ?>
+
+            <?php if (empty($featuredProducts)): ?>
+                <p class="admin-empty">No products available right now.</p>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -186,18 +327,24 @@ $features = [
                     <strong>$<?= number_format((float)$product['price'], 2) ?> USD</strong>
 
                     <?php if ((int)$product['stock'] > 0): ?>
-                        <form method="POST" action="cart_add.php" class="order-form">
-                            <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
-                            <input
-                                type="number"
-                                name="quantity"
-                                value="1"
-                                min="1"
-                                max="<?= (int)$product['stock'] ?>"
-                                class="order-qty"
-                            >
-                            <button type="submit" class="order-button">ADD TO CART</button>
-                        </form>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <form class="order-form ajax-cart-form">
+                                <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    value="0"
+                                    min="0"
+                                    max="<?= (int)$product['stock'] ?>"
+                                    class="order-qty"
+                                >
+                                <button type="submit" class="order-button">ADD TO CART</button>
+                            </form>
+                        <?php else: ?>
+                            <a href="login.php" class="order-button login-to-order">
+                                LOG IN TO ORDER
+                            </a>
+                        <?php endif; ?>
                     <?php else: ?>
                         <button type="button" class="order-button" disabled>SOLD OUT</button>
                     <?php endif; ?>
@@ -296,44 +443,40 @@ $features = [
 </footer>
 
 
-<!-- ── PRODUCT MODAL ──────────────────────────────────────────── -->
+<!-- ── PRODUCT VIEW MODAL (info only) ────────────────────────── -->
 <div class="modal-overlay" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-wrapper">
         <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
         <div class="modal-box">
-            <img src="" alt="" class="modal-img" id="modalImg">
+            <!-- LEFT: image -->
+            <div class="modal-img-wrap">
+                <img src="" alt="" class="modal-img" id="modalImg">
+            </div>
+            <!-- RIGHT: details -->
             <div class="modal-body">
+                <span class="modal-tag">Harvest Bread Co.</span>
                 <h2 id="modalTitle"></h2>
-                <p class="modal-desc" id="modalDesc"></p>
                 <div class="modal-stars">★★★★★</div>
+                <hr class="modal-divider">
+                <p class="modal-desc" id="modalDesc"></p>
+                <hr class="modal-divider">
                 <div class="modal-price" id="modalPrice"></div>
                 <div class="modal-stock" id="modalStock"></div>
-
-                <form method="POST" action="cart_add.php" class="modal-form" id="modalForm">
-                    <input type="hidden" name="product_id" id="modalProductId">
-                    <input
-                        type="number"
-                        name="quantity"
-                        id="modalQty"
-                        value="1"
-                        min="1"
-                        class="modal-qty"
-                    >
-                    <button type="submit" class="modal-add-btn" id="modalAddBtn">
-                        ADD TO CART
-                    </button>
-                </form>
+                <span class="modal-badge" id="modalBadge"></span>
             </div>
         </div>
     </div>
 </div>
 
+<!-- ── CART TOAST ─────────────────────────────────────────────── -->
+<div class="cart-toast" id="cartToast">🛒 Added to cart successfully!</div>
 
 <script src="script.js"></script>
 <script>
 (function () {
     'use strict';
 
+    /* ── VIEW ITEM modal (info only) ── */
     const overlay  = document.getElementById('productModal');
     const closeBtn = document.getElementById('modalClose');
     const img      = document.getElementById('modalImg');
@@ -341,34 +484,20 @@ $features = [
     const desc     = document.getElementById('modalDesc');
     const price    = document.getElementById('modalPrice');
     const stock    = document.getElementById('modalStock');
-    const pid      = document.getElementById('modalProductId');
-    const qty      = document.getElementById('modalQty');
-    const addBtn   = document.getElementById('modalAddBtn');
+    const badge    = document.getElementById('modalBadge');
 
     function openModal(btn) {
         const stockNum = parseInt(btn.dataset.stock, 10);
-
-        img.src        = 'image/' + btn.dataset.image;
-        img.alt        = btn.dataset.name;
+        img.src           = 'image/' + btn.dataset.image;
+        img.alt           = btn.dataset.name;
         title.textContent = btn.dataset.name;
-        desc.textContent  = btn.dataset.desc || '';
+        desc.textContent  = btn.dataset.desc || 'A freshly baked artisan product from our bakery.';
         price.textContent = '$' + btn.dataset.price + ' USD';
-        pid.value         = btn.dataset.id;
-
-        if (stockNum > 0) {
-            stock.textContent   = stockNum + ' in stock';
-            qty.max             = stockNum;
-            qty.value           = 1;
-            qty.disabled        = false;
-            addBtn.disabled     = false;
-            addBtn.textContent  = 'ADD TO CART';
-        } else {
-            stock.textContent   = 'Sold out';
-            qty.disabled        = true;
-            addBtn.disabled     = true;
-            addBtn.textContent  = 'SOLD OUT';
-        }
-
+        stock.textContent = stockNum > 0 ? stockNum + ' items in stock' : 'Currently sold out';
+        badge.textContent = stockNum > 0 ? '✔ Available' : '✘ Sold Out';
+        badge.style.background   = stockNum > 0 ? '#fff4e6' : '#fce8e8';
+        badge.style.color        = stockNum > 0 ? '#e07000' : '#c0392b';
+        badge.style.borderColor  = stockNum > 0 ? '#f5c68a' : '#e8a0a0';
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
     }
@@ -378,21 +507,73 @@ $features = [
         document.body.style.overflow = '';
     }
 
-    // Attach to every VIEW ITEM button
     document.querySelectorAll('.view-item-btn').forEach(function (btn) {
         btn.addEventListener('click', function () { openModal(btn); });
     });
-
     closeBtn.addEventListener('click', closeModal);
-
-    // Click outside modal box closes it
     overlay.addEventListener('click', function (e) {
         if (e.target === overlay) closeModal();
     });
-
-    // Escape key closes modal
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') closeModal();
+    });
+
+    /* ── ADD TO CART — AJAX with toast ── */
+    const toast = document.getElementById('cartToast');
+    let toastTimer;
+
+    function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+            toast.classList.remove('show');
+        }, 2800);
+    }
+
+    document.querySelectorAll('.ajax-cart-form').forEach(function (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const qtyInput = form.querySelector('[name="quantity"]');
+            const qty      = parseInt(qtyInput.value, 10);
+
+            if (!qty || qty < 1) {
+                showToast('⚠️ Please enter a quantity of at least 1.');
+                return;
+            }
+
+            const data = new FormData(form);
+
+            fetch('cart_add.php', {
+                method: 'POST',
+                body:   data
+            }).then(function (response) {
+                if (response.status === 401) {
+                    showToast('🔒 Please log in to order.');
+                    setTimeout(function () {
+                        window.location.href = 'login.php';
+                    }, 1200);
+                    return;
+                }
+
+                showToast('🛒 Item added to cart successfully!');
+                qtyInput.value = 0;
+
+                // Update cart count in nav if present
+                const cartLink = document.querySelector('a[href="cart.php"]');
+                if (cartLink) {
+                    fetch('cart_count.php')
+                        .then(function (r) { return r.text(); })
+                        .then(function (count) {
+                            cartLink.textContent = 'CART' + (parseInt(count) > 0 ? ' (' + count + ')' : '');
+                        })
+                        .catch(function () {});
+                }
+            }).catch(function () {
+                showToast('❌ Something went wrong. Please try again.');
+            });
+        });
     });
 })();
 </script>

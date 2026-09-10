@@ -141,7 +141,7 @@ try {
 
     cartClear();
 
-    header('Location: order_success.php?id=' . $orderId);
+    header('Location: payment.php?id=' . $orderId);
     exit;
 
 } catch (PDOException $e) {

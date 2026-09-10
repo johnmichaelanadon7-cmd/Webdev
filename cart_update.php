@@ -5,6 +5,11 @@ session_start();
 require 'database/config.php';
 require 'cart_helpers.php';
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
 $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
 $action    = $_POST['action'] ?? 'update';
 

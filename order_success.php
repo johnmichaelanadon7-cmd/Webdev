@@ -19,7 +19,8 @@ if (!$id) {
 $pdo = getConnection();
 
 $stmt = $pdo->prepare("
-    SELECT id, total, status, contact_number, notes, created_at
+    SELECT id, total, status, contact_number, notes, created_at,
+           payment_method, payment_status
     FROM `orders`
     WHERE id = :id AND user_id = :user_id
     LIMIT 1
@@ -35,6 +36,19 @@ if (!$order) {
     header('Location: index.php');
     exit;
 }
+
+if ($order['payment_status'] !== 'paid') {
+    header('Location: payment.php?id=' . $id);
+    exit;
+}
+
+$paymentMethodLabels = [
+    'cash'        => 'Cash',
+    'credit_card' => 'Credit Card',
+    'mobile_pay'  => 'Mobile Pay',
+];
+
+$paymentMethodLabel = $paymentMethodLabels[$order['payment_method']] ?? 'Unknown';
 
 $itemsStmt = $pdo->prepare("
     SELECT product_name, price, quantity
@@ -84,10 +98,13 @@ $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
 
     <section class="auth-box success-box">
 
+        <span class="payment-done-badge">✓ PAYMENT DONE</span>
+
         <h1>THANK YOU!</h1>
 
         <p class="success-text">
-            Order #<?= (int) $order['id'] ?> has been placed.
+            Order #<?= (int) $order['id'] ?> has been placed and paid via
+            <strong><?= htmlspecialchars($paymentMethodLabel) ?></strong>.
         </p>
 
         <ul class="checkout-items">
@@ -116,6 +133,10 @@ $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
 
         <a href="orders.php" class="auth-button success-button">
             VIEW MY ORDERS
+        </a>
+
+        <a href="payment_history.php" class="auth-switch">
+            View Payment History
         </a>
 
         <a href="index.php#products" class="auth-switch">
