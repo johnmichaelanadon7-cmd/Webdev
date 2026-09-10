@@ -1,4 +1,11 @@
 <?php
+
+/*
+ * Session cart helpers.
+ * The cart is stored as $_SESSION['cart'] = [ product_id => quantity ].
+ * Every file that uses these must call session_start() itself first.
+ */
+
 function cartGet(): array
 {
     return $_SESSION['cart'] ?? [];
@@ -21,7 +28,7 @@ function cartAdd(int $productId, int $quantity, int $maxStock): void
     $newQuantity = ($cart[$productId] ?? 0) + $quantity;
     $newQuantity = max(0, min($newQuantity, $maxStock));
 
-    if ($newQuantity < 0) {
+    if ($newQuantity < 1) {
         unset($cart[$productId]);
     } else {
         $cart[$productId] = $newQuantity;
@@ -36,7 +43,7 @@ function cartSetQuantity(int $productId, int $quantity, int $maxStock): void
 
     $quantity = max(0, min($quantity, $maxStock));
 
-    if ($quantity < 0) {
+    if ($quantity < 1) {
         unset($cart[$productId]);
     } else {
         $cart[$productId] = $quantity;

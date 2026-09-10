@@ -8,8 +8,8 @@ require 'cart_helpers.php';
 $productId = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
 $quantity  = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
 
-if (!$quantity || $quantity < 0) {
-    $quantity = 0;
+if (!$quantity || $quantity < 1) {
+    $quantity = 1;
 }
 
 if (!$productId) {
