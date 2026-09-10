@@ -44,6 +44,21 @@ try {
 
     if ($action === 'delete') {
 
+        /* This project allows exactly one fixed admin account —
+           it can never be deleted through this panel. */
+        $roleStmt = $pdo->prepare("SELECT role FROM `users` WHERE id = :id LIMIT 1");
+        $roleStmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $roleStmt->execute();
+        $target = $roleStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($target && $target['role'] === 'admin') {
+            header(
+                'Location: admin.php?status=error&message='
+                . urlencode('The admin account cannot be deleted.')
+            );
+            exit;
+        }
+
         $stmt = $pdo->prepare("DELETE FROM `users` WHERE id = :id");
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -51,27 +66,6 @@ try {
         header(
             'Location: admin.php?status=success&message='
             . urlencode('User deleted.')
-        );
-        exit;
-    }
-
-    if ($action === 'make_admin' || $action === 'make_user') {
-
-        $newRole = $action === 'make_admin' ? 'admin' : 'user';
-
-        $stmt = $pdo->prepare("
-            UPDATE `users`
-            SET role = :role
-            WHERE id = :id
-        ");
-
-        $stmt->bindValue(':role', $newRole);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        header(
-            'Location: admin.php?status=success&message='
-            . urlencode('User role updated.')
         );
         exit;
     }

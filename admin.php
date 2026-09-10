@@ -153,19 +153,11 @@ $totalAdmins = count(array_filter(
 
                                 <span class="admin-you">You</span>
 
+                            <?php elseif ($user['role'] === 'admin'): ?>
+
+                                <span class="admin-you">Fixed admin</span>
+
                             <?php else: ?>
-
-                                <form method="POST" action="admin_actions.php">
-                                    <input type="hidden" name="id" value="<?= (int) $user['id'] ?>">
-
-                                    <?php if ($user['role'] === 'admin'): ?>
-                                        <input type="hidden" name="action" value="make_user">
-                                        <button type="submit" class="small-button">Demote</button>
-                                    <?php else: ?>
-                                        <input type="hidden" name="action" value="make_admin">
-                                        <button type="submit" class="small-button">Promote</button>
-                                    <?php endif; ?>
-                                </form>
 
                                 <form
                                     method="POST"
