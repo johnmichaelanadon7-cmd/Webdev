@@ -1,11 +1,4 @@
 <?php
-
-/*
- * Session cart helpers.
- * The cart is stored as $_SESSION['cart'] = [ product_id => quantity ].
- * Every file that uses these must call session_start() itself first.
- */
-
 function cartGet(): array
 {
     return $_SESSION['cart'] ?? [];

@@ -31,7 +31,7 @@ $stmt->execute();
 
 $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$product || !$product['is_active'] || (int) $product['stock'] < 0) {
+if (!$product || !$product['is_active'] || (int) $product['stock'] < 1) {
     header(
         'Location: index.php?status=error&message='
         . urlencode('That item is currently unavailable.')
