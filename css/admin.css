@@ -1,0 +1,254 @@
+/* =============================================================
+   admin.css — Admin dashboard, orders, products, users
+   Depends on: base.css
+============================================================= */
+
+/* ---------------------------------------------------------
+   PAGE LAYOUT
+--------------------------------------------------------- */
+
+.admin-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 50px 20px 80px;
+}
+
+.admin-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.admin-heading h1 {
+    margin: 0;
+    color: var(--orange);
+    font-family: "Luckiest Guy", cursive;
+    font-size: 44px;
+}
+
+/* ---------------------------------------------------------
+   STAT CARDS
+--------------------------------------------------------- */
+
+.admin-stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 35px;
+}
+
+.admin-stat-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 20px 35px;
+    text-align: center;
+    min-width: 140px;
+}
+
+.admin-stat-number {
+    display: block;
+    font-family: "Luckiest Guy", cursive;
+    font-size: 34px;
+    color: var(--orange-dark);
+}
+
+.admin-stat-label {
+    display: block;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    color: var(--ink);
+    margin-top: 4px;
+}
+
+/* ---------------------------------------------------------
+   DATA TABLE
+--------------------------------------------------------- */
+
+.admin-table-wrap {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 700px;
+}
+
+.admin-table th,
+.admin-table td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--paper);
+    vertical-align: middle;
+}
+
+.admin-table th {
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    color: var(--ink);
+    background: var(--cream);
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------------------------------------------------------
+   ACTION BUTTONS IN TABLE
+--------------------------------------------------------- */
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-actions form { display: inline; }
+
+.small-button {
+    border: 0;
+    background: var(--orange-dark);
+    color: var(--white);
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.small-button:hover { background: var(--orange-dim); }
+
+.small-button.danger      { background: #b00000; }
+.small-button.danger:hover { background: #830000; }
+
+.small-button.secondary       { background: #555; }
+.small-button.secondary:hover { background: #333; }
+
+/* ---------------------------------------------------------
+   MISC ADMIN UI
+--------------------------------------------------------- */
+
+.admin-you {
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 12px;
+    color: #999;
+}
+
+.admin-empty {
+    text-align: center;
+    color: #888;
+    padding: 30px 0;
+}
+
+/* Sub-navigation tabs */
+.admin-subnav {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.admin-subnav a {
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: var(--white);
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-sm);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.admin-subnav a.active {
+    background: var(--orange-dark);
+    color: var(--white);
+}
+
+.admin-subnav a:hover:not(.active) {
+    background: var(--paper);
+}
+
+/* ---------------------------------------------------------
+   ADMIN FORM CARD (add/edit products, status update)
+--------------------------------------------------------- */
+
+.admin-form-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 25px 30px;
+    margin-bottom: 30px;
+}
+
+.admin-form-card h2 {
+    margin-top: 0;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 18px;
+}
+
+.admin-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Tinos", serif;
+    font-size: 15px;
+}
+
+/* ---------------------------------------------------------
+   STATUS UPDATE FORM (order_view.php)
+--------------------------------------------------------- */
+
+.status-form {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 20px 25px;
+    max-width: 320px;
+}
+
+.status-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #cfcfcf;
+    font-family: "Tinos", serif;
+    font-size: 14px;
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.status-form select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255,114,0,0.12);
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .admin-form-row { grid-template-columns: 1fr; }
+    .admin-container { padding: 30px 15px 60px; }
+    .admin-heading h1 { font-size: 34px; }
+    .admin-stat-card { padding: 16px 24px; }
+}

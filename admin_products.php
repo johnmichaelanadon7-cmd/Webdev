@@ -53,7 +53,8 @@ if ($editId) {
 
     <title>Manage Products | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/admin.css">
 
 </head>
 

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $status  = $_GET['status'] ?? null;
 $message = $_GET['message'] ?? null;
 $id      = $_GET['id'] ?? null;
@@ -13,41 +15,13 @@ $id      = $_GET['id'] ?? null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 
 <body class="auth-page">
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.php" class="brand">
-            <img src="image/logo.svg" alt="Harvest Bread Co. Logo">
-        </a>
-
-        <button
-            class="menu-toggle"
-            aria-label="Open menu"
-            aria-expanded="false"
-        >
-            ☰
-        </button>
-
-        <nav class="main-nav">
-
-            <a href="index.php">HOME</a>
-            <a href="index.php#about">ABOUT</a>
-            <a href="index.php#products">PRODUCTS</a>
-            <a href="index.php#location">LOCATION</a>
-            <a href="index.php#blog">BLOG</a>
-            <a href="login.php">LOGIN</a>
-
-        </nav>
-
-    </div>
-
-</header>
+<?php $page = 'signup'; include 'partials/header.php'; ?>
 
 <main class="auth-container">
 

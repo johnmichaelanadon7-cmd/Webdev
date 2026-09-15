@@ -81,30 +81,14 @@ $paymentMethodLabels = [
 
     <title>Order #<?= (int) $order['id'] ?> | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/shop.css">
 
 </head>
 
 <body class="auth-page">
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.php" class="brand">
-            <img src="image/logo.svg" alt="Harvest Bread Co. Logo">
-        </a>
-
-        <nav class="main-nav">
-            <a href="index.php">HOME</a>
-            <a href="<?= $isAdmin ? 'admin_orders.php' : 'orders.php' ?>">
-                <?= $isAdmin ? 'ALL ORDERS' : 'MY ORDERS' ?>
-            </a>
-        </nav>
-
-    </div>
-
-</header>
+<?php $page = 'order_view'; include 'partials/header.php'; ?>
 
 <main class="shop-container">
 
@@ -193,6 +177,8 @@ $paymentMethodLabels = [
     <?php endif; ?>
 
 </main>
+
+<script src="script.js"></script>
 
 </body>
 </html>

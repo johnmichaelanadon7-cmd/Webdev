@@ -3,6 +3,7 @@
 session_start();
 
 require 'database/config.php';
+require 'error_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -136,5 +137,6 @@ try {
 } catch (PDOException $e) {
 
     $pdo->rollBack();
-    $redirectBack('Payment could not be completed: ' . $e->getMessage());
+    logAppError('Payment', $e);
+    $redirectBack('Payment could not be completed. Please try again.');
 }

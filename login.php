@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $status  = $_GET['status'] ?? null;
 $message = $_GET['message'] ?? null;
 
@@ -18,43 +20,14 @@ $message = $_GET['message'] ?? null;
 
     <title>Login | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/auth.css">
 
 </head>
 
 <body class="auth-page">
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.php" class="brand">
-
-            <img
-                src="image/logo.svg"
-                alt="Harvest Bread Co. Logo"
-            >
-
-        </a>
-
-        <button
-            class="menu-toggle"
-            aria-label="Open menu"
-            aria-expanded="false"
-        >
-            ☰
-        </button>
-
-        <nav class="main-nav">
-
-            <a href="index.php">HOME</a>
-            <a href="signup.php">SIGN UP</a>
-
-        </nav>
-
-    </div>
-
-</header>
+<?php $page = 'login'; include 'partials/header.php'; ?>
 
 <main class="auth-container">
 

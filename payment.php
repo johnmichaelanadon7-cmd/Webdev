@@ -61,28 +61,14 @@ $method  = $_GET['method'] ?? 'cash';
 
     <title>Payment | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/shop.css">
 
 </head>
 
 <body class="auth-page">
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.php" class="brand">
-            <img src="image/logo.svg" alt="Harvest Bread Co. Logo">
-        </a>
-
-        <nav class="main-nav">
-            <a href="index.php">HOME</a>
-            <a href="orders.php">MY ORDERS</a>
-        </nav>
-
-    </div>
-
-</header>
+<?php $page = 'payment'; include 'partials/header.php'; ?>
 
 <main class="shop-container">
 
@@ -199,6 +185,7 @@ $method  = $_GET['method'] ?? 'cash';
 
 </main>
 
+<script src="script.js"></script>
 <script>
 (function () {
     'use strict';

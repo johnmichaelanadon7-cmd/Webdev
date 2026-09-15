@@ -1,0 +1,34 @@
+# === Harvest Bread Co. — Git ignore rules ===
+
+# Database credentials / environment config
+database/config.php
+
+# PHP error logs
+*.log
+php_errors.log
+error_log
+
+# macOS metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows thumbnails
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor / IDE directories
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Uploaded / generated files (serve from outside the repo in production)
+# image/ directory is included intentionally because it contains
+# the required product and brand images for the project demo.
+# In a production deployment, move uploads to a separate storage service.
+
+# Composer / npm build artifacts
+vendor/
+node_modules/

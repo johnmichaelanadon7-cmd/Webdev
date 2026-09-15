@@ -54,29 +54,14 @@ $methodLabels = [
 
     <title>Payment History | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/shop.css">
 
 </head>
 
 <body class="auth-page">
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.php" class="brand">
-            <img src="image/logo.svg" alt="Harvest Bread Co. Logo">
-        </a>
-
-        <nav class="main-nav">
-            <a href="index.php">HOME</a>
-            <a href="orders.php">MY ORDERS</a>
-            <a href="index.php#products">PRODUCTS</a>
-        </nav>
-
-    </div>
-
-</header>
+<?php $page = 'payment_history'; include 'partials/header.php'; ?>
 
 <main class="shop-container">
 
@@ -149,6 +134,8 @@ $methodLabels = [
     <?php endif; ?>
 
 </main>
+
+<script src="script.js"></script>
 
 </body>
 </html>

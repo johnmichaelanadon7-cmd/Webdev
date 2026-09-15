@@ -76,23 +76,14 @@ $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
 
     <title>Order Placed | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/shop.css">
 
 </head>
 
 <body class="auth-page">
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.php" class="brand">
-            <img src="image/logo.svg" alt="Harvest Bread Co. Logo">
-        </a>
-
-    </div>
-
-</header>
+<?php $page = 'order_success'; $minimalHeader = true; include 'partials/header.php'; ?>
 
 <main class="auth-container">
 

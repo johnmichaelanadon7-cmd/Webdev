@@ -3,6 +3,7 @@
 session_start();
 
 require 'database/config.php';
+require 'error_helpers.php';
 
 if (
     !isset($_SESSION['user_id']) ||
@@ -134,10 +135,10 @@ try {
 
 } catch (PDOException $e) {
 
-    header(
-        'Location: admin_products.php?status=error&message='
-        . urlencode($e->getMessage())
+    redirectWithError(
+        'admin_products.php',
+        'AdminProductAction',
+        $e,
+        'Something went wrong. Please try again.'
     );
-
-    exit;
 }

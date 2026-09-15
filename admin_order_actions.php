@@ -3,6 +3,7 @@
 session_start();
 
 require 'database/config.php';
+require 'error_helpers.php';
 
 if (
     !isset($_SESSION['user_id']) ||
@@ -44,10 +45,10 @@ try {
 
 } catch (PDOException $e) {
 
-    header(
-        'Location: admin_orders.php?status=error&message='
-        . urlencode($e->getMessage())
+    redirectWithError(
+        'admin_orders.php',
+        'AdminOrderAction',
+        $e,
+        'Something went wrong. Please try again.'
     );
-
-    exit;
 }

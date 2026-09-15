@@ -3,6 +3,7 @@
 session_start();
 
 require 'database/config.php';
+require 'error_helpers.php';
 
 /* Admin-only guard */
 if (
@@ -75,10 +76,10 @@ try {
 
 } catch (PDOException $e) {
 
-    header(
-        'Location: admin.php?status=error&message='
-        . urlencode($e->getMessage())
+    redirectWithError(
+        'admin.php',
+        'AdminUserAction',
+        $e,
+        'Something went wrong. Please try again.'
     );
-
-    exit;
 }

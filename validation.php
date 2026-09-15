@@ -54,12 +54,12 @@ function validateSignupInput(array $post): array
 
     $errors = array_values($errors);
 
-    if (empty($errors)) {
-        $username = htmlspecialchars($username);
-        $email = htmlspecialchars($email);
-        $number = htmlspecialchars($number);
-    }
-
+    /*
+     * Store the trimmed, raw values as-is. Escaping (htmlspecialchars)
+     * belongs at output time, not before saving to the database —
+     * escaping here would corrupt names like "O'Brien" and double-escape
+     * them the next time they're displayed.
+     */
     return [
         'errors' => $errors,
         'data' => [

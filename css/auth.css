@@ -1,0 +1,213 @@
+/* =============================================================
+   auth.css — Login, Sign Up, and Account Created pages
+   Depends on: base.css
+============================================================= */
+
+/* ---------------------------------------------------------
+   PAGE WRAPPER
+--------------------------------------------------------- */
+
+.auth-page {
+    background: var(--cream);
+    min-height: 100vh;
+}
+
+.auth-container {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+}
+
+/* ---------------------------------------------------------
+   AUTH CARD
+--------------------------------------------------------- */
+
+.auth-box {
+    width: min(100%, 470px);
+    background: var(--white);
+    padding: 45px 40px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.auth-box h1 {
+    margin: 0;
+    text-align: center;
+    color: var(--orange);
+    font-family: "Luckiest Guy", cursive;
+    font-size: 52px;
+    line-height: 1;
+}
+
+.auth-subtitle {
+    text-align: center;
+    margin: 10px 0 30px;
+    font-size: 17px;
+}
+
+/* ---------------------------------------------------------
+   FORM FIELDS
+--------------------------------------------------------- */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    background: #fafafa;
+    color: var(--ink);
+    outline: none;
+    font-family: "Tinos", serif;
+    font-size: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--orange);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(255,114,0,0.12);
+}
+
+/* Inline validation feedback */
+.form-group input:invalid:not(:placeholder-shown) {
+    border-color: #b00000;
+}
+
+.field-error {
+    display: none;
+    font-size: 12px;
+    color: #b00000;
+    margin-top: 5px;
+    font-family: "Tinos", serif;
+}
+
+.form-group.has-error .field-error {
+    display: block;
+}
+
+.form-group.has-error input {
+    border-color: #b00000;
+    box-shadow: 0 0 0 3px rgba(176,0,0,0.08);
+}
+
+/* ---------------------------------------------------------
+   SUBMIT BUTTON
+--------------------------------------------------------- */
+
+.auth-button {
+    width: 100%;
+    display: block;
+    border: 0;
+    background: var(--orange-dark);
+    color: var(--white);
+    padding: 13px 20px;
+    border-radius: var(--radius-pill);
+    text-align: center;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.auth-button:hover {
+    background: var(--orange-dim);
+    transform: translateY(-1px);
+}
+
+.shop-button {
+    width: auto;
+    display: inline-block;
+    padding: 13px 30px;
+}
+
+/* ---------------------------------------------------------
+   SWITCH LINK
+--------------------------------------------------------- */
+
+.auth-switch {
+    text-align: center;
+    margin: 22px 0 0;
+    font-size: 15px;
+    display: block;
+}
+
+.auth-switch a {
+    color: var(--orange-dark);
+    font-family: "Tilt Warp", sans-serif;
+    font-weight: bold;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ---------------------------------------------------------
+   SUCCESS / ACCOUNT CREATED
+--------------------------------------------------------- */
+
+.success-box {
+    text-align: center;
+}
+
+.success-text {
+    font-size: 18px;
+    margin: 15px 0 25px;
+}
+
+.account-details {
+    text-align: left;
+    background: var(--cream);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.account-details p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.success-button {
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .auth-container {
+        min-height: calc(100vh - 60px);
+        padding: 30px 15px;
+    }
+
+    .auth-box {
+        padding: 35px 25px;
+        border-radius: 15px;
+    }
+
+    .auth-box h1 { font-size: 42px; }
+    .auth-subtitle { font-size: 15px; }
+
+    .form-group input { padding: 12px; }
+}

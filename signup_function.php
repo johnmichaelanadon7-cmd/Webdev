@@ -2,6 +2,7 @@
 
 require 'database/config.php';
 require 'validation.php';
+require 'error_helpers.php';
 
 if (!isset($_POST['signup'])) {
     header('Location: signup.php');
@@ -92,7 +93,11 @@ try {
 
     $stmt->execute();
 
-    $newId = $pdo->lastInsertId();
+    $newId = (int) $pdo->lastInsertId();
+
+    /* Allow success.php to display this one user's details once */
+    session_start();
+    $_SESSION['new_user_id'] = $newId;
 
     header(
         'Location: success.php?id=' . $newId
@@ -102,10 +107,10 @@ try {
 
 } catch (PDOException $e) {
 
-    header(
-        'Location: signup.php?status=error&message='
-        . urlencode($e->getMessage())
+    redirectWithError(
+        'signup.php',
+        'Signup',
+        $e,
+        'Something went wrong while creating your account. Please try again.'
     );
-
-    exit;
 }

@@ -3,6 +3,7 @@
 session_start();
 
 require 'database/config.php';
+require 'error_helpers.php';
 
 if (!isset($_POST['login'])) {
     header('Location: login.php');
@@ -76,6 +77,9 @@ try {
         exit;
     }
 
+    /* Regenerate session ID on login to prevent session fixation */
+    session_regenerate_id(true);
+
     /* Store login information */
 
     $_SESSION['user_id'] = $user['id'];
@@ -92,10 +96,10 @@ try {
 
 } catch (PDOException $e) {
 
-    header(
-        'Location: login.php?status=error&message='
-        . urlencode($e->getMessage())
+    redirectWithError(
+        'login.php',
+        'Login',
+        $e,
+        'Something went wrong while logging you in. Please try again.'
     );
-
-    exit;
 }

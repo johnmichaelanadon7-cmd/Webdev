@@ -67,28 +67,14 @@ if (!empty($cart)) {
 
     <title>Your Cart | Harvest Bread Co.</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/shop.css">
 
 </head>
 
 <body class="auth-page">
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.php" class="brand">
-            <img src="image/logo.svg" alt="Harvest Bread Co. Logo">
-        </a>
-
-        <nav class="main-nav">
-            <a href="index.php">HOME</a>
-            <a href="index.php#products">PRODUCTS</a>
-        </nav>
-
-    </div>
-
-</header>
+<?php $page = 'cart'; include 'partials/header.php'; ?>
 
 <main class="shop-container">
 
@@ -181,6 +167,8 @@ if (!empty($cart)) {
     <?php endif; ?>
 
 </main>
+
+<script src="script.js"></script>
 
 </body>
 </html>

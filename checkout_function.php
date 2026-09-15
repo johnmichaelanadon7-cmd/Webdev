@@ -4,6 +4,7 @@ session_start();
 
 require 'database/config.php';
 require 'cart_helpers.php';
+require 'error_helpers.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -148,10 +149,10 @@ try {
 
     $pdo->rollBack();
 
-    header(
-        'Location: checkout.php?status=error&message='
-        . urlencode('Could not place your order: ' . $e->getMessage())
+    redirectWithError(
+        'checkout.php',
+        'Checkout',
+        $e,
+        'Could not place your order. Please try again.'
     );
-
-    exit;
 }
