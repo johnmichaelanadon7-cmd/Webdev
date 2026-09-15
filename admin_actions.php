@@ -5,7 +5,6 @@ session_start();
 require 'database/config.php';
 require 'error_helpers.php';
 
-/* Admin-only guard */
 if (
     !isset($_SESSION['user_id']) ||
     ($_SESSION['role'] ?? '') !== 'admin'
@@ -30,7 +29,6 @@ if (!$id) {
     exit;
 }
 
-/* Admins can't act on their own account through this page */
 if ($id === (int) $_SESSION['user_id']) {
     header(
         'Location: admin.php?status=error&message='
@@ -45,8 +43,6 @@ try {
 
     if ($action === 'delete') {
 
-        /* This project allows exactly one fixed admin account —
-           it can never be deleted through this panel. */
         $roleStmt = $pdo->prepare("SELECT role FROM `users` WHERE id = :id LIMIT 1");
         $roleStmt->bindValue(':id', $id, PDO::PARAM_INT);
         $roleStmt->execute();

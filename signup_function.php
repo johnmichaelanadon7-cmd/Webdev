@@ -28,7 +28,6 @@ try {
 
     $pdo = getConnection();
 
-    /* Check if email already exists */
     $checkSql = "
         SELECT id
         FROM `users`
@@ -55,13 +54,11 @@ try {
         exit;
     }
 
-    /* Hash password */
     $hashedPassword = password_hash(
         $result['data']['password'],
         PASSWORD_DEFAULT
     );
 
-    /* Insert new account */
     $sql = "
         INSERT INTO `users`
         (username, email, number, password)
@@ -95,7 +92,6 @@ try {
 
     $newId = (int) $pdo->lastInsertId();
 
-    /* Allow success.php to display this one user's details once */
     session_start();
     $_SESSION['new_user_id'] = $newId;
 

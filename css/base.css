@@ -1,13 +1,5 @@
-/* =============================================================
-   base.css — Global tokens, reset, header, footer
-   Imported by every page via their own stylesheet.
-============================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Bakbak+One&family=Luckiest+Guy&family=Secular+One&family=Tilt+Warp&family=Tinos:wght@400;700&display=swap');
-
-/* ---------------------------------------------------------
-   DESIGN TOKENS
---------------------------------------------------------- */
 
 :root {
     --orange:      #ff7200;
@@ -19,21 +11,15 @@
     --white:       #fff;
     --max:         1180px;
 
-    /* shadows */
     --shadow-sm:  0 4px 12px rgba(0,0,0,.06);
     --shadow-md:  0 8px 24px rgba(0,0,0,.08);
     --shadow-lg:  0 12px 35px rgba(0,0,0,.12);
 
-    /* border-radius */
     --radius-sm:  8px;
     --radius-md:  14px;
     --radius-lg:  18px;
     --radius-pill: 30px;
 }
-
-/* ---------------------------------------------------------
-   RESET / BASE
---------------------------------------------------------- */
 
 *,
 *::before,
@@ -72,10 +58,6 @@ select,
 textarea {
     font: inherit;
 }
-
-/* ---------------------------------------------------------
-   HEADER
---------------------------------------------------------- */
 
 .site-header {
     height: 64px;
@@ -143,8 +125,13 @@ textarea {
     color: var(--orange);
 }
 
-/* Login and Sign Up share the same pill shape/size so they read as a
-   matched pair — Sign Up filled (primary), Login outlined (secondary). */
+.main-nav a.is-active {
+    color: var(--ink);
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
 .login-nav,
 .signup-nav {
     padding: 7px 15px;
@@ -173,10 +160,6 @@ textarea {
     background: var(--orange-dim) !important;
     border-color: var(--orange-dim);
 }
-
-/* ---------------------------------------------------------
-   CART ICON (nav)
---------------------------------------------------------- */
 
 .cart-link {
     position: relative;
@@ -231,10 +214,6 @@ textarea {
     font-size: 25px;
     cursor: pointer;
 }
-
-/* ---------------------------------------------------------
-   FOOTER
---------------------------------------------------------- */
 
 .footer {
     width: 100%;
@@ -296,10 +275,6 @@ textarea {
     font-size: 14px;
 }
 
-/* ---------------------------------------------------------
-   SHARED UTILITY: BUTTONS
---------------------------------------------------------- */
-
 .pill-button,
 .order-button {
     border: 0;
@@ -343,10 +318,6 @@ textarea {
     cursor: not-allowed;
 }
 
-/* ---------------------------------------------------------
-   SHARED UTILITY: STATUS BADGES
---------------------------------------------------------- */
-
 .role-badge {
     display: inline-block;
     padding: 4px 12px;
@@ -383,18 +354,33 @@ textarea {
 }
 
 .role-badge.status-completed {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     background: #e5f7e5;
+    border: 1px solid #b6e6b6;
     color: #147a14;
+    font-weight: bold;
+}
+
+.role-badge.status-completed::before {
+    content: "\2713";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #1a9a1a;
+    color: var(--white);
+    font-size: 9px;
+    line-height: 1;
 }
 
 .role-badge.status-cancelled {
     background: #ffe5e5;
     color: #b00000;
 }
-
-/* ---------------------------------------------------------
-   SHARED UTILITY: FLASH MESSAGES
---------------------------------------------------------- */
 
 .site-message {
     max-width: var(--max);
@@ -419,10 +405,6 @@ textarea {
     color: #147a14;
 }
 
-/* ---------------------------------------------------------
-   SHARED UTILITY: IMAGE PLACEHOLDER
---------------------------------------------------------- */
-
 .image-placeholder {
     background: linear-gradient(135deg, #d8d2ca, #a59a8e);
     color: var(--white);
@@ -445,10 +427,6 @@ textarea {
     letter-spacing: 0;
     margin-top: 7px;
 }
-
-/* ---------------------------------------------------------
-   RESPONSIVE — HEADER / FOOTER
---------------------------------------------------------- */
 
 @media (max-width: 1200px) {
     .nav-container { width: 92%; }

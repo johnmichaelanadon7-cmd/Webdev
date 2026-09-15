@@ -1,37 +1,10 @@
 <?php
 
-/*
- * partials/header.php
- *
- * One shared header/nav used by every page, so Login, Sign Up, Cart,
- * Checkout, Orders, etc. all render the exact same header instead of
- * each page carrying its own hand-copied (and slowly drifting) markup.
- *
- * The including page must already have called session_start() and
- * required 'database/config.php' (for pages that need it). This file
- * requires cart_helpers.php itself so the cart badge always works.
- *
- * Optional variables the including page can set before requiring this:
- *
- *   $page          string  Current page key. Pass 'index' when this is
- *                          included from index.php itself, so in-page
- *                          anchors (#about, #products, ...) are used
- *                          instead of index.php#about. Any other value
- *                          (or leaving it unset) links back to the
- *                          homepage sections from a sub-page. Default: ''.
- *
- *   $minimalHeader bool    When true, renders only the logo (no nav) —
- *                          used by one-time landing pages such as
- *                          success.php. Default: false.
- */
-
 require_once __DIR__ . '/../cart_helpers.php';
 
 $page          = $page ?? '';
 $minimalHeader = $minimalHeader ?? false;
 
-/* From index.php itself we can scroll smoothly with "#about"; from any
-   other page we need to go back to "index.php#about" first. */
 $homeHref   = ($page === 'index') ? '#home' : 'index.php';
 $anchorBase = ($page === 'index') ? '' : 'index.php';
 

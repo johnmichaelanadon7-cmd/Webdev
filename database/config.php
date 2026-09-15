@@ -18,7 +18,6 @@ function getConnection(): PDO
 
         return $pdo;
     } catch (PDOException $e) {
-        /* Log the real error server-side; never expose DB details to the browser */
         error_log('DB connection failed: ' . $e->getMessage());
         http_response_code(503);
         die("The site is temporarily unavailable. Please try again later.");

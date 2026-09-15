@@ -4,7 +4,6 @@ session_start();
 
 require 'database/config.php';
 
-/* Admin-only guard */
 if (
     !isset($_SESSION['user_id']) ||
     ($_SESSION['role'] ?? '') !== 'admin'

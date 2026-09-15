@@ -56,14 +56,6 @@ $redirectBack = static function (string $message) use ($orderId, $method): void 
 
 $provider = null;
 
-/*
- * Method-specific validation.
- *
- * Credit Card: the PIN is only a demo verification code for this school
- * project. It is checked right here for shape (must be 4 digits) and then
- * thrown away — it is never written to a variable that reaches the
- * database, a log file, or a session.
- */
 switch ($method) {
 
     case 'cash':
@@ -79,7 +71,6 @@ switch ($method) {
             $redirectBack('Enter the 4-digit verification code to continue.');
         }
 
-        // Demo verification only — intentionally not stored anywhere.
         unset($pin);
         break;
 
@@ -109,7 +100,6 @@ try {
     $updateStmt->execute();
 
     if ($updateStmt->rowCount() < 1) {
-        // Already paid by another request, or order vanished.
         $pdo->rollBack();
         header('Location: order_success.php?id=' . $orderId);
         exit;

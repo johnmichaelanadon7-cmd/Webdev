@@ -27,6 +27,20 @@ $products = $pdo->query("
     ORDER BY id ASC
 ")->fetchAll(PDO::FETCH_ASSOC);
 
+$totalProducts = count($products);
+
+$visibleCount = count(array_filter(
+    $products,
+    fn($p) => $p['is_active']
+));
+
+$hiddenCount = $totalProducts - $visibleCount;
+
+$lowStockCount = count(array_filter(
+    $products,
+    fn($p) => (int) $p['stock'] <= 5
+));
+
 $editing = null;
 
 if ($editId) {
@@ -194,6 +208,30 @@ if ($editId) {
 
     </div>
 
+    <div class="admin-stats">
+
+        <div class="admin-stat-card">
+            <span class="admin-stat-number"><?= $totalProducts ?></span>
+            <span class="admin-stat-label">Total Products</span>
+        </div>
+
+        <div class="admin-stat-card stat-ready">
+            <span class="admin-stat-number"><?= $visibleCount ?></span>
+            <span class="admin-stat-label">Visible</span>
+        </div>
+
+        <div class="admin-stat-card stat-neutral">
+            <span class="admin-stat-number"><?= $hiddenCount ?></span>
+            <span class="admin-stat-label">Hidden</span>
+        </div>
+
+        <div class="admin-stat-card stat-warn">
+            <span class="admin-stat-number"><?= $lowStockCount ?></span>
+            <span class="admin-stat-label">Low Stock</span>
+        </div>
+
+    </div>
+
     <div class="admin-table-wrap">
 
         <table class="admin-table">
@@ -218,12 +256,30 @@ if ($editId) {
                             <img
                                 src="image/<?= htmlspecialchars($product['image']) ?>"
                                 alt="<?= htmlspecialchars($product['name']) ?>"
-                                class="cart-thumb"
+                                class="admin-thumb"
                             >
                         </td>
                         <td><?= htmlspecialchars($product['name']) ?></td>
                         <td>$<?= number_format($product['price'], 2) ?></td>
-                        <td><?= (int) $product['stock'] ?></td>
+                        <td>
+                            <?php
+                                $stockQty = (int) $product['stock'];
+                                if ($stockQty <= 5) {
+                                    $stockTier  = 'stock-low';
+                                    $stockLabel = 'Low';
+                                } elseif ($stockQty <= 20) {
+                                    $stockTier  = 'stock-medium';
+                                    $stockLabel = 'Medium';
+                                } else {
+                                    $stockTier  = 'stock-good';
+                                    $stockLabel = 'Good';
+                                }
+                            ?>
+                            <span class="stock-badge <?= $stockTier ?>">
+                                <span class="stock-badge-count"><?= $stockQty ?></span>
+                                <span class="stock-badge-label"><?= $stockLabel ?></span>
+                            </span>
+                        </td>
                         <td>
                             <span class="role-badge role-<?= $product['is_active'] ? 'admin' : 'user' ?>">
                                 <?= $product['is_active'] ? 'Yes' : 'Hidden' ?>

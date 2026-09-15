@@ -4,8 +4,6 @@ session_start();
 require 'database/config.php';
 require 'cart_helpers.php';
 
-// Harvest Bread Co. — PHP-ready single-page replica
-
 $pdo = getConnection();
 
 $products = $pdo->query("
@@ -56,7 +54,6 @@ $features = [
         </div>
     <?php endif; ?>
 
-    <!-- HERO -->
     <section class="hero" id="home">
         <img src="image/hero.png" alt="Harvest Bread Co. bakery" class="real-image">
         <div class="hero-overlay">
@@ -65,8 +62,6 @@ $features = [
         </div>
     </section>
 
-
-    <!-- FEATURED PRODUCTS -->
     <section class="featured section-white" id="products">
         <div class="section-intro">
             <h2>Featured Products</h2>
@@ -79,9 +74,6 @@ $features = [
 
         <div class="featured-grid">
             <?php
-                // Show up to 6 real products here — same product supplies
-                // both the card (image/name) and the "View Item" modal data,
-                // so what you see is exactly what you get.
                 $featuredProducts = array_slice($products, 0, 6);
             ?>
             <?php foreach ($featuredProducts as $product): ?>
@@ -113,8 +105,6 @@ $features = [
         </div>
     </section>
 
-
-    <!-- VALUES / ABOUT -->
     <section class="values" id="about">
         <div class="values-grid">
             <?php foreach ($features as $i => $feature): ?>
@@ -129,8 +119,6 @@ $features = [
         </div>
     </section>
 
-
-    <!-- SERVICE STRIP -->
     <section class="service-strip">
         <div class="service-title">FRESH, FAST &amp; ALWAYS<br>HERE FOR YOU</div>
         <div>Crafted with love &amp;<br>quality products</div>
@@ -138,8 +126,6 @@ $features = [
         <div>Freshly baked, every<br>single day</div>
     </section>
 
-
-    <!-- PRODUCTS SHOWCASE -->
     <section class="product-showcase">
         <div class="product-grid">
             <?php foreach ($products as $product): ?>
@@ -185,8 +171,6 @@ $features = [
         </div>
     </section>
 
-
-    <!-- STORY / BLOG -->
     <section class="story-grid" id="blog">
         <article class="story-text light-panel">
             <div class="breadbag">
@@ -224,8 +208,6 @@ $features = [
         </article>
     </section>
 
-
-    <!-- LOCATION -->
     <section class="location-section" id="location">
         <div class="location-content">
             <h2>VISIT US</h2>
@@ -240,8 +222,6 @@ $features = [
 
 </main>
 
-
-<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-col">
         <h3>Contact us</h3>
@@ -270,17 +250,13 @@ $features = [
     </div>
 </footer>
 
-
-<!-- ── PRODUCT VIEW MODAL (info only) ────────────────────────── -->
 <div class="modal-overlay" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-wrapper">
         <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
         <div class="modal-box">
-            <!-- LEFT: image -->
             <div class="modal-img-wrap">
                 <img src="" alt="" class="modal-img" id="modalImg">
             </div>
-            <!-- RIGHT: details -->
             <div class="modal-body">
                 <span class="modal-tag">Harvest Bread Co.</span>
                 <h2 id="modalTitle"></h2>
@@ -296,7 +272,6 @@ $features = [
     </div>
 </div>
 
-<!-- ── CART TOAST ─────────────────────────────────────────────── -->
 <div class="cart-toast" id="cartToast">🛒 Added to cart successfully!</div>
 
 <script src="script.js"></script>

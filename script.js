@@ -1,9 +1,7 @@
-/* Harvest Bread Co. — script.js */
 
 (function () {
     'use strict';
 
-    /* ── Hamburger menu ──────────────────────────────────── */
     const toggle = document.querySelector('.menu-toggle');
     const nav    = document.querySelector('.main-nav');
 
@@ -31,7 +29,6 @@
         });
     }
 
-    /* ── Active nav link on scroll ───────────────────────── */
     const sections = document.querySelectorAll('section[id], footer[id]');
     const navLinks = document.querySelectorAll('.main-nav a[href^="#"]');
 
@@ -42,9 +39,9 @@
             if (top <= 80) current = section.id;
         });
         navLinks.forEach(function (link) {
-            link.style.color = '';
+            link.classList.remove('is-active');
             if (link.getAttribute('href') === '#' + current) {
-                link.style.color = 'var(--orange)';
+                link.classList.add('is-active');
             }
         });
     }
@@ -52,7 +49,6 @@
     window.addEventListener('scroll', setActiveLink, { passive: true });
     setActiveLink();
 
-    /* ── Sign-up client-side validation ─────────────────── */
     const signupForm = document.querySelector('form[action="signup_function.php"]');
 
     if (signupForm) {
@@ -126,7 +122,6 @@
         signupForm.addEventListener('submit', validateSignup);
     }
 
-    /* ── Login client-side validation ───────────────────── */
     const loginForm = document.querySelector('form[action="login_function.php"]');
 
     if (loginForm) {
@@ -167,7 +162,6 @@
         });
     }
 
-    /* ── Checkout client-side validation ────────────────── */
     const checkoutForm = document.querySelector('form[action="checkout_function.php"]');
 
     if (checkoutForm) {
@@ -188,7 +182,6 @@
         });
     }
 
-    /* ── Cart badge (nav icon) ───────────────────────────── */
     function updateCartBadge(count) {
         const badge = document.getElementById('cartBadge');
         if (!badge) return;
@@ -197,7 +190,6 @@
         badge.classList.toggle('is-empty', count < 1);
     }
 
-    /* ── VIEW ITEM modal (info only, index.php) ──────────── */
     const modalOverlay  = document.getElementById('productModal');
 
     if (modalOverlay) {
@@ -242,7 +234,6 @@
         });
     }
 
-    /* ── ADD TO CART — AJAX with toast (index.php) ───────── */
     const cartToast = document.getElementById('cartToast');
 
     if (cartToast) {

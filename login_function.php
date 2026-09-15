@@ -13,8 +13,6 @@ if (!isset($_POST['login'])) {
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
-/* Validate fields */
-
 $errors = [];
 
 if ($email === '') {
@@ -59,8 +57,6 @@ try {
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    /* Check user and password */
-
     if (
         !$user ||
         !password_verify(
@@ -77,10 +73,7 @@ try {
         exit;
     }
 
-    /* Regenerate session ID on login to prevent session fixation */
     session_regenerate_id(true);
-
-    /* Store login information */
 
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['username'] = $user['username'];

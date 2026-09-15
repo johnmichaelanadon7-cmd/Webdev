@@ -15,12 +15,6 @@ if (!$id) {
     exit;
 }
 
-/*
- * Security: only the user who just signed up can see this page.
- * signup_function.php stores the new user's ID in the session
- * immediately after INSERT; we compare against that token here
- * and clear it so the page can only be loaded once.
- */
 $allowedId = $_SESSION['new_user_id'] ?? null;
 unset($_SESSION['new_user_id']);
 

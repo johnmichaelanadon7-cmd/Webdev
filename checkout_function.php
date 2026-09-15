@@ -43,7 +43,6 @@ try {
     $ids = array_keys($cart);
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
-    /* Lock the rows so stock can't change under us mid-checkout */
     $stmt = $pdo->prepare("
         SELECT id, name, price, stock
         FROM `products`

@@ -1,11 +1,3 @@
-/* =============================================================
-   admin.css — Admin dashboard, orders, products, users
-   Depends on: base.css
-============================================================= */
-
-/* ---------------------------------------------------------
-   PAGE LAYOUT
---------------------------------------------------------- */
 
 .admin-container {
     max-width: 1000px;
@@ -25,10 +17,6 @@
     font-size: 44px;
 }
 
-/* ---------------------------------------------------------
-   STAT CARDS
---------------------------------------------------------- */
-
 .admin-stats {
     display: flex;
     gap: 20px;
@@ -41,30 +29,48 @@
     background: var(--white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
-    padding: 20px 35px;
+    padding: 18px 32px;
     text-align: center;
-    min-width: 140px;
+    min-width: 130px;
+    border-top: 4px solid var(--orange);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
+.admin-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.admin-stat-card.stat-pending   { border-top-color: #d6a400; }
+.admin-stat-card.stat-preparing { border-top-color: #0b5aa1; }
+.admin-stat-card.stat-ready     { border-top-color: #1a7a1a; }
+.admin-stat-card.stat-warn      { border-top-color: #b00000; }
+.admin-stat-card.stat-neutral   { border-top-color: #999; }
 
 .admin-stat-number {
     display: block;
     font-family: "Luckiest Guy", cursive;
-    font-size: 34px;
+    font-size: 32px;
     color: var(--orange-dark);
+    line-height: 1.1;
 }
+
+.admin-stat-card.stat-pending   .admin-stat-number { color: #9a7300; }
+.admin-stat-card.stat-preparing .admin-stat-number { color: #0b5aa1; }
+.admin-stat-card.stat-ready     .admin-stat-number { color: #1a7a1a; }
+.admin-stat-card.stat-warn      .admin-stat-number { color: #b00000; }
+.admin-stat-card.stat-neutral   .admin-stat-number { color: #666; }
 
 .admin-stat-label {
     display: block;
     font-family: "Tilt Warp", sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.6px;
     color: var(--ink);
-    margin-top: 4px;
+    margin-top: 6px;
+    text-transform: uppercase;
+    opacity: 0.75;
 }
-
-/* ---------------------------------------------------------
-   DATA TABLE
---------------------------------------------------------- */
 
 .admin-table-wrap {
     background: var(--white);
@@ -72,6 +78,8 @@
     box-shadow: var(--shadow-md);
     padding: 10px;
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 70vh;
 }
 
 .admin-table {
@@ -95,15 +103,65 @@
     letter-spacing: 0.6px;
     color: var(--ink);
     background: var(--cream);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background: rgba(0,0,0,0.015);
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(255,114,0,0.05);
 }
 
 .admin-table tr:last-child td {
     border-bottom: none;
 }
 
-/* ---------------------------------------------------------
-   ACTION BUTTONS IN TABLE
---------------------------------------------------------- */
+.admin-table tbody tr.order-row-approved {
+    background: rgba(26,154,26,0.05);
+    box-shadow: inset 3px 0 0 #1a9a1a;
+}
+
+.admin-table tbody tr.order-row-approved:hover {
+    background: rgba(26,154,26,0.09);
+}
+
+.admin-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    display: block;
+}
+
+.status-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--white);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%23c95a00' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 7px;
+    border: 1px solid #d8d2ca;
+    border-radius: var(--radius-pill);
+    padding: 7px 28px 7px 14px;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.status-select:hover,
+.status-select:focus {
+    border-color: var(--orange);
+    outline: none;
+}
 
 .admin-actions {
     display: flex;
@@ -136,10 +194,6 @@
 .small-button.secondary       { background: #555; }
 .small-button.secondary:hover { background: #333; }
 
-/* ---------------------------------------------------------
-   MISC ADMIN UI
---------------------------------------------------------- */
-
 .admin-you {
     font-family: "Tilt Warp", sans-serif;
     font-size: 12px;
@@ -152,7 +206,6 @@
     padding: 30px 0;
 }
 
-/* Sub-navigation tabs */
 .admin-subnav {
     display: flex;
     gap: 10px;
@@ -162,28 +215,26 @@
 }
 
 .admin-subnav a {
-    padding: 8px 20px;
+    padding: 8px 22px;
     border-radius: 20px;
     background: var(--white);
     font-family: "Tilt Warp", sans-serif;
     font-size: 12px;
     letter-spacing: 0.5px;
     box-shadow: var(--shadow-sm);
-    transition: background 0.2s ease, color 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 .admin-subnav a.active {
     background: var(--orange-dark);
     color: var(--white);
+    box-shadow: var(--shadow-md);
 }
 
 .admin-subnav a:hover:not(.active) {
     background: var(--paper);
+    transform: translateY(-1px);
 }
-
-/* ---------------------------------------------------------
-   ADMIN FORM CARD (add/edit products, status update)
---------------------------------------------------------- */
 
 .admin-form-card {
     background: var(--white);
@@ -213,10 +264,6 @@
     font-size: 15px;
 }
 
-/* ---------------------------------------------------------
-   STATUS UPDATE FORM (order_view.php)
---------------------------------------------------------- */
-
 .status-form {
     background: var(--white);
     border-radius: var(--radius-md);
@@ -242,9 +289,65 @@
     box-shadow: 0 0 0 3px rgba(255,114,0,0.12);
 }
 
-/* ---------------------------------------------------------
-   RESPONSIVE
---------------------------------------------------------- */
+.stock-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 12px 4px 10px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+}
+
+.stock-badge-count {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.stock-badge-label {
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+.stock-badge::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.stock-badge.stock-low {
+    background: #ffe5e5;
+    border-color: #f5b8b8;
+    color: #b00000;
+}
+
+.stock-badge.stock-low::before {
+    background: #b00000;
+}
+
+.stock-badge.stock-medium {
+    background: #fff4d6;
+    border-color: #f0d98c;
+    color: #9a7300;
+}
+
+.stock-badge.stock-medium::before {
+    background: #d6a400;
+}
+
+.stock-badge.stock-good {
+    background: #e5f7e5;
+    border-color: #b6e6b6;
+    color: #147a14;
+}
+
+.stock-badge.stock-good::before {
+    background: #1a9a1a;
+}
 
 @media (max-width: 600px) {
     .admin-form-row { grid-template-columns: 1fr; }

@@ -36,7 +36,6 @@ if (!$order) {
     exit;
 }
 
-/* Already paid? Nothing to do here anymore. */
 if ($order['payment_status'] === 'paid') {
     header('Location: order_success.php?id=' . $id);
     exit;
@@ -129,7 +128,6 @@ $method  = $_GET['method'] ?? 'cash';
             </div>
         </div>
 
-        <!-- Cash: just an explicit confirmation before we mark it paid -->
         <div class="payment-fields" data-method="cash">
             <label class="checkbox-group-inline">
                 <input type="checkbox" name="cash_confirm" value="1">
@@ -138,7 +136,6 @@ $method  = $_GET['method'] ?? 'cash';
             </label>
         </div>
 
-        <!-- Credit Card: demo-only 4-digit verification code, never stored -->
         <div class="payment-fields" data-method="credit_card" hidden>
             <div class="form-group">
                 <label for="pin">4-DIGIT VERIFICATION CODE</label>
@@ -160,7 +157,6 @@ $method  = $_GET['method'] ?? 'cash';
             </div>
         </div>
 
-        <!-- Mobile Pay: pick a provider -->
         <div class="payment-fields" data-method="mobile_pay" hidden>
             <div class="form-group">
                 <label>CHOOSE A PROVIDER</label>

@@ -1,13 +1,3 @@
-/* =============================================================
-   shop.css — Cart, Checkout, Orders, Order View, Order Success,
-              Payment History, and shared shop/auth page wrapper
-   Depends on: base.css
-============================================================= */
-
-/* ---------------------------------------------------------
-   PAGE WRAPPER (auth-page is shared with auth, but shop
-   pages also use it for the cream background)
---------------------------------------------------------- */
 
 .auth-page {
     background: var(--cream);
@@ -28,10 +18,6 @@
     margin-bottom: 30px;
 }
 
-/* ---------------------------------------------------------
-   EMPTY STATE
---------------------------------------------------------- */
-
 .empty-state {
     text-align: center;
     background: var(--white);
@@ -44,10 +30,6 @@
     margin-bottom: 20px;
     font-size: 17px;
 }
-
-/* ---------------------------------------------------------
-   CART TABLE
---------------------------------------------------------- */
 
 .cart-table-wrap {
     background: var(--white);
@@ -87,10 +69,6 @@
     box-shadow: 0 0 0 3px rgba(255,114,0,0.12);
 }
 
-/* ---------------------------------------------------------
-   CART SUMMARY BAR
---------------------------------------------------------- */
-
 .cart-summary {
     display: flex;
     align-items: center;
@@ -109,10 +87,6 @@
     font-family: "Tilt Warp", sans-serif;
     font-size: 16px;
 }
-
-/* ---------------------------------------------------------
-   CHECKOUT
---------------------------------------------------------- */
 
 .checkout-summary {
     background: var(--white);
@@ -192,10 +166,6 @@
     letter-spacing: 0.8px;
 }
 
-/* ---------------------------------------------------------
-   ORDER STATUS / SUCCESS
---------------------------------------------------------- */
-
 .order-status {
     margin: 10px 0 20px;
 }
@@ -211,10 +181,6 @@
     border-radius: 20px;
     margin-bottom: 12px;
 }
-
-/* ---------------------------------------------------------
-   PAYMENT PAGE
---------------------------------------------------------- */
 
 .payment-form .form-group { margin-bottom: 20px; }
 
@@ -300,10 +266,6 @@
     color: #777;
 }
 
-/* ---------------------------------------------------------
-   SHARED BUTTON OVERRIDES
---------------------------------------------------------- */
-
 .auth-button {
     width: 100%;
     display: block;
@@ -342,10 +304,6 @@
 }
 
 .auth-switch:hover { text-decoration: underline; }
-
-/* ---------------------------------------------------------
-   RESPONSIVE
---------------------------------------------------------- */
 
 @media (max-width: 600px) {
     .shop-container { padding: 30px 15px 60px; }

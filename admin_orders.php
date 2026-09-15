@@ -30,6 +30,20 @@ $orders = $pdo->query("
 
 $statuses = ['pending', 'preparing', 'ready', 'completed', 'cancelled'];
 
+$totalOrders = count($orders);
+
+$countByStatus = array_fill_keys($statuses, 0);
+foreach ($orders as $order) {
+    if (isset($countByStatus[$order['status']])) {
+        $countByStatus[$order['status']]++;
+    }
+}
+
+$unpaidCount = count(array_filter(
+    $orders,
+    fn($o) => $o['payment_status'] !== 'paid'
+));
+
 $paymentMethodLabels = [
     'cash'        => 'Cash',
     'credit_card' => 'Credit Card',
@@ -95,6 +109,35 @@ $paymentMethodLabels = [
         <div class="auth-message success"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
+    <div class="admin-stats">
+
+        <div class="admin-stat-card">
+            <span class="admin-stat-number"><?= $totalOrders ?></span>
+            <span class="admin-stat-label">Total Orders</span>
+        </div>
+
+        <div class="admin-stat-card stat-pending">
+            <span class="admin-stat-number"><?= $countByStatus['pending'] ?></span>
+            <span class="admin-stat-label">Pending</span>
+        </div>
+
+        <div class="admin-stat-card stat-preparing">
+            <span class="admin-stat-number"><?= $countByStatus['preparing'] ?></span>
+            <span class="admin-stat-label">Preparing</span>
+        </div>
+
+        <div class="admin-stat-card stat-ready">
+            <span class="admin-stat-number"><?= $countByStatus['ready'] ?></span>
+            <span class="admin-stat-label">Ready</span>
+        </div>
+
+        <div class="admin-stat-card stat-warn">
+            <span class="admin-stat-number"><?= $unpaidCount ?></span>
+            <span class="admin-stat-label">Unpaid</span>
+        </div>
+
+    </div>
+
     <div class="admin-table-wrap">
 
         <table class="admin-table">
@@ -116,7 +159,7 @@ $paymentMethodLabels = [
 
                 <?php foreach ($orders as $order): ?>
 
-                    <tr>
+                    <tr class="<?= $order['status'] === 'completed' ? 'order-row-approved' : '' ?>">
                         <td>#<?= (int) $order['id'] ?></td>
                         <td>
                             <?= htmlspecialchars($order['username']) ?><br>
@@ -141,7 +184,7 @@ $paymentMethodLabels = [
                         <td>
                             <form method="POST" action="admin_order_actions.php" class="cart-qty-form">
                                 <input type="hidden" name="id" value="<?= (int) $order['id'] ?>">
-                                <select name="status">
+                                <select name="status" class="status-select">
                                     <?php foreach ($statuses as $statusOption): ?>
                                         <option
                                             value="<?= $statusOption ?>"
